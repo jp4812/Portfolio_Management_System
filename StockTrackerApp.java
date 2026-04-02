@@ -207,6 +207,7 @@ public class StockTrackerApp {
         }
 
         for (int i = 0; i < 3; i++) {
+            stock.updatePrice();
             StockDisplay.displayStockDetails(stock);
             if (i < 2) {
                 try {
@@ -221,6 +222,9 @@ public class StockTrackerApp {
     // ── OPTION 4: REFRESH PRICES ──────────────────────────────────
     private void refreshPrices() {
         System.out.println("\nRefreshing prices...");
+        for (Stock stock : portfolio.getAllStocks()) {
+            stock.updatePrice();
+        }
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {

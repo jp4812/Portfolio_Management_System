@@ -11,18 +11,13 @@ import java.util.List;
 
 public class Portfolio {
 
-    // Private variables
     private String portfolioName;
     private List<Stock> stocks;
 
-    // ── CONSTRUCTOR ────────────────────────────────────────────────
     public Portfolio(String portfolioName) {
         this.portfolioName = portfolioName;
-        // Create an empty list to store stocks
         this.stocks = new ArrayList<Stock>();
     }
-
-    // ── STOCK MANAGEMENT METHODS ───────────────────────────────────
     
     // Add a new stock to portfolio
     public void addStock(Stock stock) {
@@ -39,11 +34,10 @@ public class Portfolio {
                 return true;
             }
         }
-        System.out.println("❌ Stock " + symbol + " not found in portfolio!");
+        System.out.println(" Stock " + symbol + " not found in portfolio!");
         return false;
     }
 
-    // Get a specific stock by symbol
     public Stock getStock(String symbol) {
         for (Stock stock : stocks) {
             if (stock.getSymbol().equals(symbol)) {
@@ -53,18 +47,12 @@ public class Portfolio {
         return null;
     }
 
-    // Get all stocks in portfolio
     public List<Stock> getAllStocks() {
         return stocks;
     }
-
-    // ── PORTFOLIO CALCULATION METHODS ──────────────────────────────
     
-    // ✓ Calculate total amount invested across all stocks
     public double getTotalPurchaseCost() {
         double total = 0;
-        
-        // Loop through all stocks and sum their purchase costs
         for (Stock stock : stocks) {
             total += stock.getTotalPurchaseCost();
         }
@@ -72,11 +60,10 @@ public class Portfolio {
         return total;
     }
 
-    // ✓ Calculate current total portfolio value
+    
     public double getTotalCurrentValue() {
         double total = 0;
         
-        // Loop through all stocks and sum their current values
         for (Stock stock : stocks) {
             total += stock.getCurrentValue();
         }
@@ -84,8 +71,7 @@ public class Portfolio {
         return total;
     }
 
-    // ✓ Calculate overall profit/loss
-    // Formula: Total Current Value - Total Purchase Cost
+
     public double getTotalProfitLoss() {
         return getTotalCurrentValue() - getTotalPurchaseCost();
     }

@@ -27,7 +27,6 @@ public class PriceUpdater implements Runnable {
 
         for (int i = 1; i <= iterations; i++) {
 
-            // Wait 1 second between each update
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -38,6 +37,7 @@ public class PriceUpdater implements Runnable {
             // Print updated price for each stock
             System.out.println("--- Update #" + i + " ---");
             for (Stock stock : stocks) {
+                stock.updatePrice();
                 double currentPrice = stock.getCurrentPrice();
                 double profitLoss   = stock.getProfitLoss();
                 String direction    = profitLoss >= 0 ? "UP" : "DOWN";

@@ -172,6 +172,7 @@ public class StockDisplay {
         System.out.println("Generating " + iterations + " price updates...\n");
 
         for (int i = 1; i <= iterations; i++) {
+            stock.updatePrice();
             double price = stock.getCurrentPrice();
             double value = stock.getCurrentValue();
             double profitLoss = stock.getProfitLoss();

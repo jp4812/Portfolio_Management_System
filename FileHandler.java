@@ -32,14 +32,6 @@ public class FileHandler {
                 fw.write("Total Cost    : $" + String.format("%.2f", stock.getTotalPurchaseCost()) + "\n");
                 fw.write("----------------------------------------\n");
             }
-
-            // ── FIX: Calculate ONCE and reuse ──────────────────────
-            // Before fix: getTotalCurrentValue() and getTotalProfitLoss()
-            // both called getCurrentPrice() separately → different random
-            // values each time → wrong profit/loss result
-            //
-            // After fix: currentValue calculated once, profitLoss
-            // uses the SAME currentValue → always correct result
             double invested     = portfolio.getTotalPurchaseCost();
             double currentValue = portfolio.getTotalCurrentValue(); // called ONCE
             double profitLoss   = currentValue - invested;          // reused here
