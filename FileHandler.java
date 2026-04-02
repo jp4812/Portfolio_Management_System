@@ -28,17 +28,17 @@ public class FileHandler {
             for (Stock stock : portfolio.getAllStocks()) {
                 fw.write("Symbol        : " + stock.getSymbol() + "\n");
                 fw.write("Shares        : " + stock.getShares() + "\n");
-                fw.write("Purchase Price: $" + String.format("%.2f", stock.getPurchasePrice()) + "\n");
-                fw.write("Total Cost    : $" + String.format("%.2f", stock.getTotalPurchaseCost()) + "\n");
+                fw.write("Purchase Price: Rs. " + String.format("%.2f", stock.getPurchasePrice()) + "\n");
+                fw.write("Total Cost    : Rs. " + String.format("%.2f", stock.getTotalPurchaseCost()) + "\n");
                 fw.write("----------------------------------------\n");
             }
             double invested     = portfolio.getTotalPurchaseCost();
             double currentValue = portfolio.getTotalCurrentValue(); // called ONCE
             double profitLoss   = currentValue - invested;          // reused here
 
-            fw.write("Total Invested : $" + String.format("%.2f", invested) + "\n");
-            fw.write("Current Value  : $" + String.format("%.2f", currentValue) + "\n");
-            fw.write("Profit / Loss  : $" + String.format("%.2f", profitLoss) + "\n");
+            fw.write("Total Invested : Rs. " + String.format("%.2f", invested) + "\n");
+            fw.write("Current Value  : Rs. " + String.format("%.2f", currentValue) + "\n");
+            fw.write("Profit / Loss  : Rs. " + String.format("%.2f", profitLoss) + "\n");
             fw.write("========================================\n");
 
             fw.close();

@@ -4,15 +4,15 @@
 ========================================
 Symbol        : AAPL
 Shares        : 1
-Purchase Price: $10.00
-Total Cost    : $10.00
+Purchase Price: Rs. 10.00
+Total Cost    : Rs. 10.00
 ----------------------------------------
 Symbol        : GOOGL
 Shares        : 3
-Purchase Price: $12.00
-Total Cost    : $36.00
+Purchase Price: Rs. 12.00
+Total Cost    : Rs. 36.00
 ----------------------------------------
-Total Invested : $46.00
-Current Value  : $44.39
-Profit / Loss  : $-1.61
+Total Invested : Rs. 46.00
+Current Value  : Rs. 44.39
+Profit / Loss  : Rs. -1.61
 ========================================

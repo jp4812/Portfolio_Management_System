@@ -42,7 +42,7 @@ public class PriceUpdater implements Runnable {
                 double profitLoss   = stock.getProfitLoss();
                 String direction    = profitLoss >= 0 ? "UP" : "DOWN";
 
-                System.out.printf("  %-6s | Price: $%-8.2f | P/L: $%.2f (%s)%n",
+                System.out.printf("  %-6s | Price: Rs. %-8.2f | P/L: Rs. %.2f (%s)%n",
                         stock.getSymbol(), currentPrice, profitLoss, direction);
             }
             System.out.println();

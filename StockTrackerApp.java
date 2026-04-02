@@ -92,11 +92,10 @@ public class StockTrackerApp {
         System.out.println("1. Add New Stock");
         System.out.println("2. View All Stocks");
         System.out.println("3. View Stock Details");
-        System.out.println("4. Refresh Prices");
-        System.out.println("5. Simulate Live Price Updates (Thread)");  // updated label
-        System.out.println("6. Remove Stock");
-        System.out.println("7. Return to Main Menu");
-        System.out.println("8. Save Report to File");
+        System.out.println("4. Simulate Live Price Updates (Thread)");
+        System.out.println("5. Remove Stock");
+        System.out.println("6. Return to Main Menu");
+        System.out.println("7. Save Report to File");
         System.out.println("0. Exit");
         System.out.print("\nEnter choice: ");
     }
@@ -139,14 +138,13 @@ public class StockTrackerApp {
             case 1: addNewStock();      break;
             case 2: viewAllStocks();    break;
             case 3: viewStockDetails(); break;
-            case 4: refreshPrices();    break;
-            case 5: simulatePriceUpdates(); break;  // now uses real thread
-            case 6: removeStock();      break;
-            case 7:
+            case 4: simulatePriceUpdates(); break;
+            case 5: removeStock();      break;
+            case 6:
                 portfolio = null;
                 StockDisplay.displaySuccess("Returned to Main Menu!");
                 break;
-            case 8: saveReport();       break;
+            case 7: saveReport();       break;
             case 0: exitApplication();  break;
             default: StockDisplay.displayError("Invalid choice! Please enter 0-7.");
         }
@@ -199,7 +197,7 @@ public class StockTrackerApp {
             return;
         }
 
-        System.out.print("Enter purchase price per share ($): ");
+        System.out.print("Enter purchase price per share (Rs.): ");
         double purchasePrice = getDoubleInput();
         if (purchasePrice <= 0) {
             StockDisplay.displayError("Purchase price must be positive!");
@@ -224,12 +222,16 @@ public class StockTrackerApp {
 
         portfolio.addStock(stock);
         savePortfolios();
-        StockDisplay.displaySuccess("Stock " + symbol + " added! Total cost: $"
+        StockDisplay.displaySuccess("Stock " + symbol + " added! Total cost: Rs. "
                 + String.format("%.2f", stock.getTotalPurchaseCost()));
     }
 
-    // ── OPTION 2/4: VIEW ALL STOCKS ───────────────────────────────
+    // ── OPTION 2: VIEW ALL STOCKS ───────────────────────────────
     private void viewAllStocks() {
+        System.out.println("\nRefreshing prices...");
+        for (Stock stock : portfolio.getAllStocks()) {
+            stock.updatePrice();
+        }
         StockDisplay.displayPortfolio(portfolio);
     }
 
@@ -249,32 +251,10 @@ public class StockTrackerApp {
             return;
         }
 
-        for (int i = 0; i < 3; i++) {
-            stock.updatePrice();
-            StockDisplay.displayStockDetails(stock);
-            if (i < 2) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // Ignore
-                }
-            }
-        }
+        stock.updatePrice();
+        StockDisplay.displayStockDetails(stock);
     }
 
-    // ── OPTION 4: REFRESH PRICES ──────────────────────────────────
-    private void refreshPrices() {
-        System.out.println("\nRefreshing prices...");
-        for (Stock stock : portfolio.getAllStocks()) {
-            stock.updatePrice();
-        }
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            // Ignore
-        }
-        viewAllStocks();
-    }
 
     // ── OPTION 5: SIMULATE LIVE PRICE UPDATES USING A REAL THREAD ──
     private void simulatePriceUpdates() {

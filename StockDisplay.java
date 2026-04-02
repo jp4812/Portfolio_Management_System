@@ -122,14 +122,14 @@ public class StockDisplay {
         
         System.out.println(String.format("Symbol:              %s", stock.getSymbol()));
         System.out.println(String.format("Shares:              %d", stock.getShares()));
-        System.out.println(String.format("Purchase Price:      $%.2f", stock.getPurchasePrice()));
+        System.out.println(String.format("Purchase Price:      Rs. %.2f", stock.getPurchasePrice()));
         System.out.println(String.format("Purchase Date:       %s", stock.getPurchaseDate()));
-        System.out.println(String.format("Total Purchase Cost: $%.2f", stock.getTotalPurchaseCost()));
+        System.out.println(String.format("Total Purchase Cost: Rs. %.2f", stock.getTotalPurchaseCost()));
         
         System.out.println("\n--- Current Prices (Generated Fresh) ---");
-        System.out.println(String.format("Current Price:       $%.2f", stock.getCurrentPrice()));
-        System.out.println(String.format("Current Value:       $%.2f", stock.getCurrentValue()));
-        System.out.println(String.format("Price Change/Share:  $%.2f", stock.getPriceChangePerShare()));
+        System.out.println(String.format("Current Price:       Rs. %.2f", stock.getCurrentPrice()));
+        System.out.println(String.format("Current Value:       Rs. %.2f", stock.getCurrentValue()));
+        System.out.println(String.format("Price Change/Share:  Rs. %.2f", stock.getPriceChangePerShare()));
         
         System.out.println("\n--- Profit/Loss Analysis ---");
         double profitLoss = stock.getProfitLoss();
@@ -137,7 +137,7 @@ public class StockDisplay {
         String indicator = (profitLoss >= 0) ? "PROFIT" : "LOSS";
         String sign = (profitLoss >= 0) ? "+" : "";
         
-        System.out.println(String.format("%s: $%s%.2f (%.2f%%)", 
+        System.out.println(String.format("%s: Rs. %s%.2f (%.2f%%)", 
             indicator, sign, profitLoss, percentage));
         
         System.out.println("=".repeat(60) + "\n");
@@ -181,7 +181,7 @@ public class StockDisplay {
             String indicator = (profitLoss >= 0) ? "[+]" : "[-]";
             
             System.out.println(String.format(
-                "Update #%d: Price $%.2f %s Value: $%.2f, P/L: %s$%.2f",
+                "Update #%d: Price Rs. %.2f %s Value: Rs. %.2f, P/L: %sRs. %.2f",
                 i, price, arrow, value, (profitLoss >= 0 ? "+" : ""), profitLoss
             ));
 
