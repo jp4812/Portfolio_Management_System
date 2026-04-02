@@ -13,7 +13,7 @@ public class StockDisplay {
     // Display header for stock portfolio
     public static void displayPortfolioHeader(String portfolioName) {
         System.out.println("\n" + "=".repeat(120));
-        System.out.println("📊 STOCK PORTFOLIO: " + portfolioName);
+        System.out.println("STOCK PORTFOLIO: " + portfolioName);
         System.out.println("=".repeat(120));
     }
 
@@ -46,7 +46,7 @@ public class StockDisplay {
         String percentageDisplay = (percentageChange >= 0) ? "+" + percentageStr : percentageStr;
         
         // Visual indicator
-        String indicator = (profitLoss >= 0) ? "✅" : "❌";
+        String indicator = (profitLoss >= 0) ? "[+]" : "[-]";
 
         System.out.println(String.format(
             "%-8s %-8d %-15.2f %-15.2f %-15.2f %-15.2f %s%-14s %-12s",
@@ -65,7 +65,7 @@ public class StockDisplay {
     // Display full portfolio with all stocks
     public static void displayPortfolio(Portfolio portfolio) {
         if (portfolio.isEmpty()) {
-            System.out.println("❌ Portfolio is empty! Add stocks first.\n");
+            System.out.println("ERROR: Portfolio is empty! Add stocks first.\n");
             return;
         }
 
@@ -96,7 +96,7 @@ public class StockDisplay {
         String profitLossDisplay = (totalProfitLoss >= 0) ? "+" + profitLossStr : profitLossStr;
         String percentageStr = String.format("%.2f%%", percentageChange);
         String percentageDisplay = (percentageChange >= 0) ? "+" + percentageStr : percentageStr;
-        String indicator = (totalProfitLoss >= 0) ? "✅ PROFIT" : "❌ LOSS";
+        String indicator = (totalProfitLoss >= 0) ? "PROFIT" : "LOSS";
 
         System.out.println(String.format(
             "%-8s %-8s %-15s %-15.2f %-15s %-15.2f %s%-14s %-12s",
@@ -117,7 +117,7 @@ public class StockDisplay {
     // Display individual stock details
     public static void displayStockDetails(Stock stock) {
         System.out.println("\n" + "=".repeat(60));
-        System.out.println("📈 STOCK DETAILS: " + stock.getSymbol());
+        System.out.println("STOCK DETAILS: " + stock.getSymbol());
         System.out.println("=".repeat(60));
         
         System.out.println(String.format("Symbol:              %s", stock.getSymbol()));
@@ -134,7 +134,7 @@ public class StockDisplay {
         System.out.println("\n--- Profit/Loss Analysis ---");
         double profitLoss = stock.getProfitLoss();
         double percentage = stock.getPercentageChange();
-        String indicator = (profitLoss >= 0) ? "✅ PROFIT" : "❌ LOSS";
+        String indicator = (profitLoss >= 0) ? "PROFIT" : "LOSS";
         String sign = (profitLoss >= 0) ? "+" : "";
         
         System.out.println(String.format("%s: $%s%.2f (%.2f%%)", 
@@ -145,17 +145,17 @@ public class StockDisplay {
 
     // Display error message
     public static void displayError(String message) {
-        System.out.println("\n❌ ERROR: " + message + "\n");
+        System.out.println("\nERROR: " + message + "\n");
     }
 
     // Display success message
     public static void displaySuccess(String message) {
-        System.out.println("\n✅ " + message + "\n");
+        System.out.println("\nSUCCESS: " + message + "\n");
     }
 
     // Display info message
     public static void displayInfo(String message) {
-        System.out.println("\nℹ️  " + message + "\n");
+        System.out.println("\nINFO: " + message + "\n");
     }
 
     // Display separator
@@ -166,7 +166,7 @@ public class StockDisplay {
     // Display dynamic price update simulation
     public static void displayPriceUpdateSimulation(Stock stock, int iterations) {
         System.out.println("\n" + "=".repeat(60));
-        System.out.println("🔄 PRICE UPDATE SIMULATION: " + stock.getSymbol());
+        System.out.println("PRICE UPDATE SIMULATION: " + stock.getSymbol());
         System.out.println("=".repeat(60));
 
         System.out.println("Generating " + iterations + " price updates...\n");
@@ -177,8 +177,8 @@ public class StockDisplay {
             double value = stock.getCurrentValue();
             double profitLoss = stock.getProfitLoss();
             
-            String arrow = "→";
-            String indicator = (profitLoss >= 0) ? "✅" : "❌";
+            String arrow = "->";
+            String indicator = (profitLoss >= 0) ? "[+]" : "[-]";
             
             System.out.println(String.format(
                 "Update #%d: Price $%.2f %s Value: $%.2f, P/L: %s$%.2f",

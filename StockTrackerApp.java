@@ -8,16 +8,38 @@ package stocktracker;
 
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.io.*;
 
 public class StockTrackerApp {
 
     private Portfolio portfolio;
     private Scanner scanner;
+    private Map<String, Portfolio> portfolios;
 
     // ── CONSTRUCTOR ────────────────────────────────────────────────
     public StockTrackerApp() {
         scanner = new Scanner(System.in);
         portfolio = null;
+        portfolios = loadPortfolios();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Portfolio> loadPortfolios() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("portfolios.dat"))) {
+            return (Map<String, Portfolio>) ois.readObject();
+        } catch (Exception e) {
+            return new HashMap<>();
+        }
+    }
+
+    private void savePortfolios() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("portfolios.dat"))) {
+            oos.writeObject(portfolios);
+        } catch (Exception e) {
+            System.out.println("Error saving data: " + e.getMessage());
+        }
     }
 
     // ── MAIN METHOD ────────────────────────────────────────────────
@@ -57,6 +79,7 @@ public class StockTrackerApp {
         System.out.println("MAIN MENU");
         System.out.println("-".repeat(40));
         System.out.println("1. Create New Portfolio");
+        System.out.println("2. Access Existing Portfolio");
         System.out.println("0. Exit");
         System.out.print("\nEnter choice: ");
     }
@@ -72,7 +95,7 @@ public class StockTrackerApp {
         System.out.println("4. Refresh Prices");
         System.out.println("5. Simulate Live Price Updates (Thread)");  // updated label
         System.out.println("6. Remove Stock");
-        System.out.println("7. Start New Portfolio");
+        System.out.println("7. Return to Main Menu");
         System.out.println("8. Save Report to File");
         System.out.println("0. Exit");
         System.out.print("\nEnter choice: ");
@@ -104,8 +127,9 @@ public class StockTrackerApp {
     private void handleMainMenuChoice(int choice) {
         switch (choice) {
             case 1: createNewPortfolio(); break;
+            case 2: accessExistingPortfolio(); break;
             case 0: exitApplication();    break;
-            default: StockDisplay.displayError("Invalid choice! Please enter 0 or 1.");
+            default: StockDisplay.displayError("Invalid choice! Please enter 0, 1, or 2.");
         }
     }
 
@@ -120,7 +144,7 @@ public class StockTrackerApp {
             case 6: removeStock();      break;
             case 7:
                 portfolio = null;
-                StockDisplay.displaySuccess("Portfolio cleared. Create a new one!");
+                StockDisplay.displaySuccess("Returned to Main Menu!");
                 break;
             case 8: saveReport();       break;
             case 0: exitApplication();  break;
@@ -132,8 +156,26 @@ public class StockTrackerApp {
     private void createNewPortfolio() {
         System.out.print("\nEnter portfolio name: ");
         String name = scanner.nextLine();
+        if (portfolios.containsKey(name)) {
+            StockDisplay.displayError("Portfolio '" + name + "' already exists!");
+            return;
+        }
         portfolio = new Portfolio(name);
+        portfolios.put(name, portfolio);
+        savePortfolios();
         StockDisplay.displaySuccess("Portfolio '" + name + "' created successfully!");
+    }
+
+    // ── OPTION 2: ACCESS EXISTING PORTFOLIO ───────────────────────
+    private void accessExistingPortfolio() {
+        System.out.print("\nEnter portfolio name to access: ");
+        String name = scanner.nextLine();
+        if (portfolios.containsKey(name)) {
+            portfolio = portfolios.get(name);
+            StockDisplay.displaySuccess("Accessed portfolio '" + name + "' successfully!");
+        } else {
+            StockDisplay.displayError("Portfolio '" + name + "' does not exist!");
+        }
     }
 
     // ── OPTION 1/2: ADD NEW STOCK ─────────────────────────────────
@@ -181,6 +223,7 @@ public class StockTrackerApp {
         }
 
         portfolio.addStock(stock);
+        savePortfolios();
         StockDisplay.displaySuccess("Stock " + symbol + " added! Total cost: $"
                 + String.format("%.2f", stock.getTotalPurchaseCost()));
     }
@@ -284,7 +327,9 @@ public class StockTrackerApp {
 
         System.out.print("\nEnter stock symbol to remove: ");
         String symbol = scanner.nextLine().trim().toUpperCase();
-        portfolio.removeStock(symbol);
+        if (portfolio.removeStock(symbol)) {
+            savePortfolios();
+        }
     }
 
     // ── OPTION 8: SAVE REPORT TO FILE ──────────────────────────
@@ -296,6 +341,7 @@ public class StockTrackerApp {
 
     // ── OPTION 0: EXIT APPLICATION ────────────────────────────────
     private void exitApplication() {
+        savePortfolios();
         System.out.println("\n" + "=".repeat(60));
         System.out.println("Thank you for using Stock Tracker!");
         System.out.println("Happy investing!");

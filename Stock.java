@@ -8,11 +8,12 @@ package stocktracker;
 
 import java.util.Random;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-// 'extends Investment' = Stock INHERITS from Investment
 
-public class Stock extends Investment {
+public class Stock extends Investment implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private double basePrice;
     private double currentPrice;
     private static Random random = new Random();

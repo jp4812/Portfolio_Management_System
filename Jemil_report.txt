@@ -3,11 +3,16 @@
   Name: Jemil
 ========================================
 Symbol        : AAPL
-Shares        : 12
-Purchase Price: $13.00
-Total Cost    : $156.00
+Shares        : 1
+Purchase Price: $10.00
+Total Cost    : $10.00
 ----------------------------------------
-Total Invested : $156.00
-Current Value  : $161.64
-Profit / Loss  : $2.76
+Symbol        : GOOGL
+Shares        : 3
+Purchase Price: $12.00
+Total Cost    : $36.00
+----------------------------------------
+Total Invested : $46.00
+Current Value  : $44.39
+Profit / Loss  : $-1.61
 ========================================

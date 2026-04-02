@@ -8,8 +8,10 @@ package stocktracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class Portfolio {
+public class Portfolio implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String portfolioName;
     private List<Stock> stocks;

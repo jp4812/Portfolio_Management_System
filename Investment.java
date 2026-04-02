@@ -7,10 +7,12 @@
 package stocktracker;
 
 import java.time.LocalDate;
+import java.io.Serializable;
 
 // abstract class = cannot create object directly
 // it is only used as a parent for other classes
-public abstract class Investment {
+public abstract class Investment implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     // Common fields every investment has
     // protected = accessible by this class AND subclasses
@@ -34,9 +36,6 @@ public abstract class Investment {
     public double    getPurchasePrice() { return purchasePrice; }
     public LocalDate getPurchaseDate()  { return purchaseDate; }
 
-    // ── ABSTRACT METHOD ────────────────────────────────────────────
-    // No body here — every subclass MUST write their own version
-    // This is what enables Dynamic Method Dispatch
     public abstract double getCurrentPrice();
     public abstract double getCurrentValue();
 
