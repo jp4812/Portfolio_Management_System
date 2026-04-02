@@ -2,7 +2,6 @@
 // FILE: FileHandler.java
 // CONCEPT: File Handling
 // =============================================
-
 package stocktracker;
 
 import java.io.FileWriter;
@@ -15,7 +14,6 @@ public class FileHandler {
     // SAVE portfolio summary to a text file
     public static void saveToFile(Portfolio portfolio) {
 
-        // filename is based on portfolio name
         String filename = portfolio.getPortfolioName().replace(" ", "_") + "_report.txt";
 
         try {
@@ -35,17 +33,26 @@ public class FileHandler {
                 fw.write("----------------------------------------\n");
             }
 
-            fw.write("Total Invested : $" + String.format("%.2f", portfolio.getTotalPurchaseCost()) + "\n");
-            fw.write("Current Value  : $" + String.format("%.2f", portfolio.getTotalCurrentValue()) + "\n");
-            fw.write("Profit / Loss  : $" + String.format("%.2f", portfolio.getTotalProfitLoss()) + "\n");
+            // ── FIX: Calculate ONCE and reuse ──────────────────────
+            // Before fix: getTotalCurrentValue() and getTotalProfitLoss()
+            // both called getCurrentPrice() separately → different random
+            // values each time → wrong profit/loss result
+            //
+            // After fix: currentValue calculated once, profitLoss
+            // uses the SAME currentValue → always correct result
+            double invested     = portfolio.getTotalPurchaseCost();
+            double currentValue = portfolio.getTotalCurrentValue(); // called ONCE
+            double profitLoss   = currentValue - invested;          // reused here
+
+            fw.write("Total Invested : $" + String.format("%.2f", invested) + "\n");
+            fw.write("Current Value  : $" + String.format("%.2f", currentValue) + "\n");
+            fw.write("Profit / Loss  : $" + String.format("%.2f", profitLoss) + "\n");
             fw.write("========================================\n");
 
-            fw.close(); // always close the file when done
-
+            fw.close();
             System.out.println("Report saved to: " + filename);
 
         } catch (IOException e) {
-            // IOException is thrown if something goes wrong with the file
             System.out.println("Error saving file: " + e.getMessage());
         }
     }
@@ -53,17 +60,13 @@ public class FileHandler {
     // READ and print the saved file
     public static void readFromFile(String filename) {
         System.out.println("\n--- Reading from file: " + filename + " ---");
-
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
             String line;
-
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
-
-            br.close(); // always close the file when done
-
+            br.close();
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
